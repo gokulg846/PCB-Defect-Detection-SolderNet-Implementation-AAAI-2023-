@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import pandas as pd
@@ -8,12 +9,15 @@ import streamlit as st
 import torch
 from PIL import Image
 
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 from src.dataset import CLASS_NAMES, get_eval_transforms
 from src.gradcam import GradCAM, overlay_heatmap
 from src.model import create_soldernet_model, get_module_by_name, load_checkpoint
 
 
-ROOT = Path(__file__).resolve().parents[1]
 CHECKPOINT_PATH = ROOT / "checkpoints" / "best_model.pth"
 TEST_CSV = ROOT / "data" / "processed" / "test.csv"
 METRICS_JSON = ROOT / "results" / "metrics.json"

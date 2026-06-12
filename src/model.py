@@ -60,13 +60,13 @@ def get_module_by_name(model: nn.Module, layer_name: str) -> nn.Module:
     """Resolve names such as features[7][2].block[0] on a PyTorch module."""
 
     current: Any = model
-    for token in layer_name.replace("]", "").split("."):
-        if "[" in token:
-            attr_name, index = token.split("[", maxsplit=1)
-            current = getattr(current, attr_name) if attr_name else current
-            current = current[int(index)]
-        else:
-            current = getattr(current, token)
+    for token in layer_name.split("."):
+        attr_name = token.split("[", maxsplit=1)[0]
+        if attr_name:
+            current = getattr(current, attr_name)
+        for index in token[len(attr_name) :].replace("]", "").split("["):
+            if index:
+                current = current[int(index)]
     if not isinstance(current, nn.Module):
         raise TypeError(f"{layer_name} did not resolve to an nn.Module")
     return current
