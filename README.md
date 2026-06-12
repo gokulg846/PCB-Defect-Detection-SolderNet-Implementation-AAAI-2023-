@@ -144,7 +144,7 @@ If `checkpoints/best_model.pth` is missing, the app shows a warning and runs wit
 
 ## Results
 
-Populate this table after training and evaluation. The committed placeholder metrics are zeros until `python src/evaluate.py` is run.
+Placeholder metrics are zeros until `python src/evaluate.py` is run.
 
 | Class | F1 |
 | --- | ---: |
